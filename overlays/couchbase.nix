@@ -24,23 +24,25 @@ self: super: {
         else if sys == "x86_64-windows" then "0wwj38d3lqrj564kvfdxpr855kqv6c0fdccdfizy62a1dss3v3qs"
         else "";
     };
-
-   # Only include patchelf on Linux.
+    # On Linux, use patchelf; on Darwin (or Windows) we need unzip.
     nativeBuildInputs = if sys == "x86_64-linux" || sys == "aarch64-linux" then [
       super.patchelf
       super.makeWrapper
-    ] else [ super.makeWrapper ];
+    ] else [
+      super.makeWrapper
+      super.unzip
+    ];
 
     phases = [ "unpackPhase" "installPhase" ];
 
     installPhase = ''
       mkdir -p "$out"
-      # If the archive is a zip file, unzip it.
+      # If the URL ends with "zip", assume it's a ZIP archive and unzip it.
       if [ "${url##*.}" = "zip" ]; then
         unzip $src -d $out
       else
         cp -r * "$out"
-        # For Linux tarballs, patch ELF executables if needed.
+        # For tarballs on Linux, patch ELF binaries if needed.
         for exe in $(find "$out" -type f); do
           if file "$exe" | grep -q ELF; then
             if readelf -l "$exe" | grep -q 'Requesting program interpreter:'; then
@@ -62,5 +64,4 @@ self: super: {
       license = super.licenses.mit;
     };
   };
-}
 }
