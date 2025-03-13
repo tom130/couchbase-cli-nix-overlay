@@ -40,6 +40,7 @@ self: super: {
       # Check if `url` ends with ".zip" using grep:
       if echo "$url" | grep -q '\.zip$'; then
         unzip "$src" -d "$out"
+        cp couchbase-cli cbbackupmgr cblogredaction cbq "$out/bin/"
       else
         cp -r * "$out"
         for exe in $(find "$out" -type f); do
