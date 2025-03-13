@@ -12,7 +12,7 @@ self: super: {
       else if sys == "x86_64-darwin" then "https://packages.couchbase.com/releases/7.6.4/couchbase-server-admin-tools-7.6.4-macos_x86_64.zip"
       else if sys == "aarch64-darwin" then "https://packages.couchbase.com/releases/7.6.4/couchbase-server-admin-tools-7.6.4-macos_arm64.zip"
       else if sys == "x86_64-windows" then "https://packages.couchbase.com/releases/7.6.4/couchbase-server-admin-tools-7.6.4-windows_amd64.zip"
-      else error ("Unsupported system: " + sys);
+      else throw ("Unsupported system: " + sys);
 
     src = super.fetchurl {
       url = url;
