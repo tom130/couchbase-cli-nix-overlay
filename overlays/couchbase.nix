@@ -34,7 +34,6 @@ self: super: {
     ];
 
     phases = [ "unpackPhase" "installPhase" ];
-
     installPhase = ''
       mkdir -p "$out"
       if [ "${url##*.}" = "zip" ]; then
@@ -43,19 +42,16 @@ self: super: {
         cp -r * "$out"
         for exe in $(find "$out" -type f); do
           if file "$exe" | grep -q ELF; then
-            if readelf -l "$exe" | grep -q 'Requesting program interpreter:'; then
+            if readelf -l "$exe" | grep -q "Requesting program interpreter:"; then
               patchelf \
                 --set-interpreter "$(cat ${super.stdenv.cc}/nix-support/dynamic-linker)" \
                 --set-rpath "$out/lib" \
                 "$exe"
-            else
-              echo "Skipping ELF without interpreter: $exe"
             fi
           fi
         done
       fi
     '';
-
     meta = with super.lib; {
       platforms = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" "x86_64-windows" ];
       description = "Couchbase Server Admin Tools version 7.6.4";
