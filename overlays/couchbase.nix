@@ -37,12 +37,10 @@ self: super: {
 
     installPhase = ''
       mkdir -p "$out"
-      # If the URL ends with "zip", assume it's a ZIP archive and unzip it.
       if [ "${url##*.}" = "zip" ]; then
         unzip $src -d $out
       else
         cp -r * "$out"
-        # For tarballs on Linux, patch ELF binaries if needed.
         for exe in $(find "$out" -type f); do
           if file "$exe" | grep -q ELF; then
             if readelf -l "$exe" | grep -q 'Requesting program interpreter:'; then
