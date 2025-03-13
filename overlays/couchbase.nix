@@ -36,7 +36,7 @@ self: super: {
     phases = [ "unpackPhase" "installPhase" ];
     installPhase = ''
       mkdir -p "$out"
-      if [ "${url##*.}" = "zip" ]; then
+      if [ "${url*.}" = "zip" ]; then
         unzip $src -d $out
       else
         cp -r * "$out"
