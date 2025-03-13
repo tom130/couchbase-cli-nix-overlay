@@ -17,7 +17,7 @@ self: super: {
     src = super.fetchurl {
       url = url;
       sha256 =
-        if sys == "x86_64-linux" then "0a3z8g5dnsdrfcfdrx0qfj2srr7n57kpljkn9f91408mmv30c282"
+        if sys == "x86_64-linux" then "sha256-cHJY/f/Sihw4EJrENbXuH90EBUkN5+EXT/0CDBnP0+I="
         else if sys == "aarch64-linux" then "00w9rpmrajsc8q001xm2z8qaa7q2kc782b3m669rcq1534rns0zq"
         else if sys == "x86_64-darwin" then "1jm5gars14w4983iag3pbp4p047vwbr9km7z12fwcl6h81ysi2v1"
         else if sys == "aarch64-darwin" then "sha256-3f2heK4ecxf6p/MZoTiGi/E/4esOzS0Eyk349WN2+aw="

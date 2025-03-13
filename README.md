@@ -29,9 +29,7 @@ If your own Nix configuration uses flakes, add something like this to your `flak
     let
       pkgs = import nixpkgs {
         system = "x86_64-linux";    # or "aarch64-linux", etc.
-        overlays = [
-                 couchbase-overlay.overlays.default
-               ];
+        overlays = [ couchbase-overlay.overlays.x86_64-linux.default ];
       };
     in
     {
