@@ -58,7 +58,6 @@ self: super: {
     meta = with super.lib; {
       platforms = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" "x86_64-windows" ];
       description = "Couchbase Server Admin Tools version 7.6.4";
-      license = super.licenses.mit;
     };
   };
 }
